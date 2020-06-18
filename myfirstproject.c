@@ -29,6 +29,66 @@ void fordelay(int j)
 {   int i,k;
     for(i=0;i<j;i++);
 }
+void new_acc()
+{
+    int choice;
+    FILE *ptr;
+    ptr=fopen("record.dat","a+");
+    account_no:
+    system("cls");
+    printf("\t\t\t==== ADD RECORD  ====");
+    printf("\n\n\nEnter today's date(mm/dd/yyyy):");
+    scanf("%d/%d/%d",&add.deposit.month,&add.deposit.day,&add.deposit.year);
+     printf("\nEnter the account number:");
+    scanf("%d",&check.acc_no);
+    while(fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",&add.acc_no,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phone,add.acc_type,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+    {
+        if (check.acc_no==add.acc_no)
+            {printf("Account no. already in use!");
+            fordelay(1000000000);
+                goto account_no;
+
+            }
+    }
+    add.acc_no=check.acc_no;
+    printf("\nEnter the name : ");
+    scanf("%[^\n]%*c",add.name);
+    printf("\nEnter the date of birth(mm/dd/yyyy):");
+    scanf("%d/%d/%d ",&add.dob.month,&add.dob.day,&add.dob.year);
+    printf("\nEnter the age:");
+    scanf("%d",&add.age);
+    printf("\nEnter the address:");
+    scanf("%s",add.address);
+    printf("\nEnter the citizenship number:");
+    scanf("%s",add.citizenship);
+    printf("\nEnter the phone number: ");
+    scanf("%lf",&add.phone);
+    printf("\nEnter the amount to deposit:$");
+    scanf("%f",&add.amt);
+    printf("\nType of account:\n\t#Saving\n\t#Current\n\t#Fixed1(for 1 year)\n\t#Fixed2(for 2 years)\n\t#Fixed3(for 3 years)\n\n\tEnter your choice:");
+    scanf("%s",add.acc_type);
+
+        fprintf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,add.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+
+    fclose(ptr);
+    printf("\nAccount created successfully!!!!!!!");
+    add_invalid:
+    printf("\nEnter 1 to go to main menu or 0 to exit");
+    scanf("%d",choice);
+    if(choice==1)
+    {
+        system("cls");
+        menu();
+    }
+    else if(choice==0)
+    {
+        close();
+    }
+    else{
+        printf("\nInvalid number entered!!!");
+        goto add_invalid;
+    }
+}
 void menu()
 {
     int choice;
@@ -38,7 +98,13 @@ void menu()
     printf("\n\n\t\t\t       BANKING MANAGEMENT SYSTEM");
     printf("\n\n\n\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
     printf("\n\n\t\t[1] Create a new account\n\t\t[2] Update information of existing account\n\t\t[3] Transactions\n\t\t[4] Check the details of existing account\n\t\t[5] Remove existing account\n\t\t[6] View customer's list\n\t\t[7] ATM Feature\n\t\t[8] Exit\n\n\n\t\t Enter your choice:");
-
+    scanf("%d",&choice);
+    system("cls");
+    switch(choice)
+    {
+        case 1: new_acc();
+        break;
+    }
 }
 int main()
 {
